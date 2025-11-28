@@ -4,27 +4,26 @@ workflows:
 
     environment:
       flutter: "3.24.0"
-      xcode: "15.2"   # Safe to include even if unused
       java: "17"
 
       vars:
-        SOME_KEY: Encrypted(Value)
+        # Must be BASE64 encoded keystore file
+        CM_KEYSTORE: Encrypted(Base64KeystoreHere)
 
-        # Secure signing vars from Codemagic UI
-        CM_KEYSTORE: Encrypted(YourBase64EncodedKeystore)
         CM_KEYSTORE_PASSWORD: Encrypted(YourStorePassword)
-        CM_KEY_ALIAS: Encrypted(YourAliasName)
+        CM_KEY_ALIAS: Encrypted(YourAlias)
         CM_KEY_PASSWORD: Encrypted(YourAliasPassword)
 
     scripts:
-      # Install dependencies
+      # Get dependencies
       - flutter pub get
 
-      # Decode Android keystore (the missing step)
+      # Decode the keystore into android/app/
       - |
+        mkdir -p android/app
         echo $CM_KEYSTORE | base64 --decode > android/app/release.keystore
 
-      # Create key.properties file
+      # Create android/key.properties
       - |
         cat > android/key.properties <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
@@ -36,7 +35,7 @@ workflows:
       # Build APK
       - flutter build apk --release
 
-      # Build AAB for Google Play
+      # Build AAB
       - flutter build appbundle --release
 
     artifacts:
