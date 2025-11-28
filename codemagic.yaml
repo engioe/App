@@ -20,8 +20,7 @@ workflows:
       - flutter pub get
 
       # Decode keystore
-      - echo $CM_KEYSTORE | base64 --decode > android/app/release.keystore
-
+      
       # Set up key properties
       - |
         cat > android/key.properties <<EOF
