@@ -1,9 +1,10 @@
 workflows:
   android-native-release:
     name: Android Native Release
+    working_directory: GroupMaster-Android   # <-- IMPORTANT
 
     environment:
-      java: "17"   # only specify Java, remove android
+      java: "17"
 
     scripts:
       - chmod +x ./gradlew
