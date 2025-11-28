@@ -1,7 +1,7 @@
 workflows:
   android-release:
     name: Android Release Workflow
-    max_build_duration: 60
+    max_build_duration: 30
     environment:
       flutter: false
       xcode: false
