@@ -1,6 +1,7 @@
 workflows:
   android-release:
     name: Android Release
+    working_directory: app   # <-- ADD THIS
 
     environment:
       flutter: "3.24.0"
@@ -8,8 +9,6 @@ workflows:
 
     scripts:
       - flutter pub get
-
-      # Create key.properties using Codemagic’s internal keystore variables
       - |
         cat > android/key.properties <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
@@ -17,21 +16,9 @@ workflows:
         keyAlias=$CM_KEY_ALIAS
         storeFile=$CM_KEYSTORE_PATH
         EOF
-
-      # Build APK
       - flutter build apk --release
-
-      # Build AAB
       - flutter build appbundle --release
 
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
-      - build/app/outputs/bundle/release/app-release.aab
-
-    publishing:
-      email:
-        recipients:
-          - your-email@example.com
-        notify:
-          success: true
-          failure: true
+      - app/build/app/outputs/flutter-apk/app-release.apk
+      - app/build/app/outputs/bundle/release/app-release.aab
