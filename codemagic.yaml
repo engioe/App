@@ -1,12 +1,50 @@
 workflows:
   android-release:
     name: Android Release
+
     environment:
       flutter: "3.24.0"
-      xcode: "15.2"
+      xcode: "15.2"   # ignored for Android but allowed
       java: "17"
-       vars:
+
+      # Environment variables (secure)
+      vars:
         SOME_KEY: Encrypted(Value)
+        CM_KEYSTORE: Encrypted(YourKeystoreBase64)
+        CM_KEYSTORE_PASSWORD: Encrypted(YourStorePassword)
+        CM_KEY_ALIAS: Encrypted(YourAliasName)
+        CM_KEY_PASSWORD: Encrypted(YourAliasPassword)
 
     scripts:
+      # Install dependencies
+      - flutter pub get
+
+      # Decode keystore
+      - echo $CM_KEYSTORE | base64 --decode > android/app/release.keystore
+
+      # Set up key properties
+      - |
+        cat > android/key.properties <<EOF
+        storePassword=$CM_KEYSTORE_PASSWORD
+        keyPassword=$CM_KEY_PASSWORD
+        keyAlias=$CM_KEY_ALIAS
+        storeFile=release.keystore
+        EOF
+
+      # Build release APK
       - flutter build apk --release
+
+      # Build AAB for Play Store
+      - flutter build appbundle --release
+
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+      - build/app/outputs/bundle/release/app-release.aab
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
