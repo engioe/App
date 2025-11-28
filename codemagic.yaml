@@ -5,8 +5,7 @@ workflows:
     environment:
       flutter: false
       xcode: false
-      android:
-        gradle_options: "--no-daemon"
+      
       vars:
         CM_KEYSTORE_PASSWORD: Encrypted
         CM_KEY_PASSWORD: Encrypted
