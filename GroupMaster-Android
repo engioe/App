@@ -1,0 +1,25 @@
+GroupMaster-Android/
+│
+├── app/
+│   ├── src/main/
+│   │   ├── java/com/groupmaster/chatapp/
+│   │   │   ├── MainActivity.kt
+│   │   │   ├── ui/
+│   │   │   │   ├── login/
+│   │   │   │   ├── chat/
+│   │   │   │   ├── groups/
+│   │   │   │   └── settings/
+│   │   │   ├── viewmodel/
+│   │   │   └── network/
+│   │   ├── res/
+│   │   │   ├── layout/
+│   │   │   ├── drawable/
+│   │   │   └── mipmap/
+│   │   └── AndroidManifest.xml
+│   ├── build.gradle
+│   └── proguard-rules.pro
+│
+├── build.gradle
+├── gradle.properties
+├── settings.gradle
+└── README.md
