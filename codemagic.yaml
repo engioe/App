@@ -5,11 +5,8 @@ workflows:
       flutter: "3.24.0"
       xcode: "15.2"
       java: "17"
-      vars:
-        SOME_VAR: "value"
-      secure:
-        API_KEY:
-          encrypted: "xxxx"
+       vars:
+        SOME_KEY: Encrypted(Value)
 
     scripts:
       - flutter build apk --release
