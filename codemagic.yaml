@@ -20,7 +20,7 @@ workflows:
       - flutter pub get
 
       # Decode keystore
-      base64 my-release-key.keystore 
+        
 
       # Set up key properties
       - |
