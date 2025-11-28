@@ -1,18 +1,24 @@
 # GroupMaster Android App
 
-This is the Android app project for GroupMaster, a secure group messaging app with admin-controlled groups.
+This project is ready for Codemagic online builds.
 
-## Build Instructions (Codemagic)
+## Features
+- Login and Dashboard screens
+- Group creation & admin-controlled restrictions
+- CSV bulk contact import
+- Messaging placeholders with WebSocket support
+- Members cannot leave groups
 
+## Codemagic Setup
 1. Connect this repository to [Codemagic](https://codemagic.io)
-2. Set environment variables for signing (keystore, alias, passwords)
-3. Trigger a build:
+2. Set signing environment variables:
+   - CM_KEYSTORE_PASSWORD
+   - CM_KEY_PASSWORD
+   - CM_KEY_ALIAS
+3. Build commands:
    - APK: `./gradlew assembleRelease`
    - AAB: `./gradlew bundleRelease`
-4. Download the generated APK/AAB directly from Codemagic
+4. Download your APK/AAB directly from Codemagic
 
-## Requirements
-
-- Android SDK 34
-- Kotlin 1.9
-- Gradle 8.2+
+## CSV Format
+- Columns: `Name,PhoneNumber`
