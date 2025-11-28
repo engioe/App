@@ -6,30 +6,16 @@ workflows:
       flutter: "3.24.0"
       java: "17"
 
-      vars:
-        # Must be BASE64 encoded keystore file
-        CM_KEYSTORE: Encrypted(Base64KeystoreHere)
-
-        CM_KEYSTORE_PASSWORD: Encrypted(YourStorePassword)
-        CM_KEY_ALIAS: Encrypted(YourAlias)
-        CM_KEY_PASSWORD: Encrypted(YourAliasPassword)
-
     scripts:
-      # Get dependencies
       - flutter pub get
 
-      # Decode the keystore into android/app/
-      - |
-        mkdir -p android/app
-        echo $CM_KEYSTORE | base64 --decode > android/app/release.keystore
-
-      # Create android/key.properties
+      # Create key.properties using Codemagic’s internal keystore variables
       - |
         cat > android/key.properties <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
         keyPassword=$CM_KEY_PASSWORD
         keyAlias=$CM_KEY_ALIAS
-        storeFile=release.keystore
+        storeFile=$CM_KEYSTORE_PATH
         EOF
 
       # Build APK
