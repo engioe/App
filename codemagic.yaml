@@ -1,0 +1,24 @@
+workflows:
+  android-release:
+    name: Android Release Workflow
+    max_build_duration: 60
+    environment:
+      flutter: false
+      xcode: false
+      android:
+        gradle_options: "--no-daemon"
+      vars:
+        CM_KEYSTORE_PASSWORD: Encrypted
+        CM_KEY_PASSWORD: Encrypted
+        CM_KEY_ALIAS: Encrypted
+    scripts:
+      - name: Clean Project
+        script: ./gradlew clean
+      - name: Build Release APK
+        script: ./gradlew assembleRelease
+    artifacts:
+      - app/build/outputs/apk/release/app-release.apk
+    publishing:
+      email:
+        recipients:
+          - you@example.com
