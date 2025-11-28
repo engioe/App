@@ -3,16 +3,28 @@ workflows:
     name: Android Native Release
 
     environment:
-      java: "17"
-      android: "latest"
+      java: "17"   # only specify Java, remove android
 
     scripts:
       - chmod +x ./gradlew
 
-      # Build APK
+      # Copy keystore if you are signing
+      - mkdir -p app
+      - cp $CM_KEYSTORE_PATH app/release.keystore
+
+      # Create key.properties
+      - |
+        cat > app/key.properties <<EOF
+        storePassword=$CM_KEYSTORE_PASSWORD
+        keyPassword=$CM_KEY_PASSWORD
+        keyAlias=$CM_KEY_ALIAS
+        storeFile=release.keystore
+        EOF
+
+      # Build signed APK
       - ./gradlew assembleRelease
 
-      # Build AAB (if using bundle)
+      # Build signed AAB
       - ./gradlew bundleRelease
 
     artifacts:
