@@ -3,23 +3,22 @@ workflows:
     name: Android Release Build
     max_build_duration: 120
     environment:
-      # Codemagic wuxuu automatic u qaataa JDK haddii aad qaadato `java: "17"`
-      java: "17"
+      java: "17"                  # Automatic JAVA_HOME
       vars:
         ANDROID_HOME: /Users/builder/Library/Android/sdk
-        # JAVA_HOME automatic ayaa loo dejiyay, ma jiro backslash ama manual path required
+    working_directory: Engioe      # <-- Folder-ka Flutter project-kaaga
     scripts:
       - name: Install dependencies
         script: |
           echo "🔧 Installing Flutter dependencies..."
           flutter pub get
 
-      - name: Build APK
+      - name: Build Release APK
         script: |
           echo "📦 Building Release APK..."
           flutter build apk --release
 
-      - name: Build AAB
+      - name: Build Release AAB
         script: |
           echo "📦 Building Release AAB..."
           flutter build appbundle --release
