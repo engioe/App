@@ -7,8 +7,16 @@ workflows:
       java: "17"
 
     scripts:
+      - echo "Current directory:"
+      - pwd
+      - echo "Files:"
+      - ls -al
+
+      # Copy keystore
       - mkdir -p app
       - cp $CM_KEYSTORE_PATH app/release.keystore
+
+      # Create key.properties
       - |
         cat > app/key.properties <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
@@ -16,7 +24,11 @@ workflows:
         keyAlias=$CM_KEY_ALIAS
         storeFile=release.keystore
         EOF
+
+      # Build APK
       - ./gradlew assembleRelease
+
+      # Build AAB
       - ./gradlew bundleRelease
 
     artifacts:
