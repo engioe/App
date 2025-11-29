@@ -1,15 +1,12 @@
 workflows:
   android-native-release:
     name: Android Native Release
-    working_directory: GroupMaster-Android   # <-- IMPORTANT
+    working_directory: GroupMaster-Android   # choose ONE directory
 
     environment:
       java: "17"
 
     scripts:
-      
-working_directory: Engioe/app
-
       # Copy keystore if you are signing
       - mkdir -p app
       - cp $CM_KEYSTORE_PATH app/release.keystore
@@ -37,6 +34,4 @@ working_directory: Engioe/app
       email:
         recipients:
           - your-email@example.com
-        notify:
-          success: true
-          failure: true
+        notify: true
