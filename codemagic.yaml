@@ -5,7 +5,7 @@ workflows:
     environment:
       java: "17"
     scripts:
-      - mkdir -p app
+  
       - cp $CM_KEYSTORE_PATH app/release.keystore
       - |
         cat > app/key.properties <<EOF
