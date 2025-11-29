@@ -1,7 +1,7 @@
 workflows:
   android-native-release:
     name: Android Native Release
-    working_directory: GroupMaster-Android   # choose ONE directory
+    working_directory: GroupMaster-Android   # adjust if needed
 
     environment:
       java: "17"
@@ -34,4 +34,6 @@ workflows:
       email:
         recipients:
           - your-email@example.com
-        notify: true
+        notify:
+          success: true
+          failure: true
