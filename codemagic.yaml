@@ -1,22 +1,14 @@
 workflows:
-  android-native-release:
-    name: Android Native Release
-    working_directory: GroupMaster-Android
+  android-release:
+    name: Android Release Build
+    working_directory: Engioe
 
     environment:
       java: "17"
 
     scripts:
-      - echo "CURRENT DIRECTORY:"
-      - pwd
-      - echo "LISTING:"
-      - ls -al
       - mkdir -p app
-
-      # Copy keystore
       - cp $CM_KEYSTORE_PATH app/release.keystore
-
-      # Create key.properties
       - |
         cat > app/key.properties <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
@@ -24,11 +16,7 @@ workflows:
         keyAlias=$CM_KEY_ALIAS
         storeFile=release.keystore
         EOF
-
-      # Build signed APK
       - ./gradlew assembleRelease
-
-      # Build signed AAB
       - ./gradlew bundleRelease
 
     artifacts:
