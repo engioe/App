@@ -4,18 +4,7 @@ workflows:
     working_directory: Engioe
     environment:
       java: "17"
-    scripts:
-  
-      - cp $CM_KEYSTORE_PATH app/release.keystore
-      - |
-        cat > app/key.properties <<EOF
-        storePassword=$CM_KEYSTORE_PASSWORD
-        keyPassword=$CM_KEY_PASSWORD
-        keyAlias=$CM_KEY_ALIAS
-        storeFile=release.keystore
-        EOF
-      - ./gradlew assembleRelease
-      - ./gradlew bundleRelease
+    
     artifacts:
       - app/build/outputs/apk/release/*.apk
       - app/build/outputs/bundle/release/*.aab
