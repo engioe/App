@@ -1,19 +1,19 @@
 workflows:
   android-native-release:
     name: Android Native Release
-    working_directory: GroupMaster-Android   # adjust if needed
+    working_directory: GroupMaster-Android
 
     environment:
       java: "17"
 
     scripts:
-
-    scripts:
+      - echo "CURRENT DIRECTORY:"
       - pwd
+      - echo "LISTING:"
       - ls -al
       - mkdir -p app
-      # Copy keystore if you are signing
-      - mkdir -p app
+
+      # Copy keystore
       - cp $CM_KEYSTORE_PATH app/release.keystore
 
       # Create key.properties
