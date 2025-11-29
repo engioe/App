@@ -1,41 +1,10 @@
-workflows:
-  android-release:
-    name: Android Release Build
-    max_build_duration: 120
-    environment:
-      java: "17"                  # Automatic JAVA_HOME
-      vars:
-        ANDROID_HOME: /Users/builder/Library/Android/sdk
-    working_directory: Engioe      # <-- Folder-ka Flutter project-kaaga
-    scripts:
-      - name: Install dependencies
-        script: |
-          echo "🔧 Installing Flutter dependencies..."
-          flutter pub get
+Install dependencies
+< 1s
 
-      - name: Build Release APK
-        script: |
-          echo "📦 Building Release APK..."
-          flutter build apk --release
 
-      - name: Build Release AAB
-        script: |
-          echo "📦 Building Release AAB..."
-          flutter build appbundle --release
 
-      - name: Verify JAVA_HOME
-        script: |
-          echo "JAVA_HOME=$JAVA_HOME"
-          java -version
+Show command
 
-    artifacts:
-      - build/app/outputs/apk/release/*.apk
-      - build/app/outputs/bundle/release/*.aab
 
-    publishing:
-      email:
-        recipients:
-          - your-email@example.com
-        notify:
-          success: true
-          failure: true
+Build failed :|
+Step 2 script `Install dependencies` exited with status code 1
