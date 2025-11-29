@@ -7,6 +7,11 @@ workflows:
       java: "17"
 
     scripts:
+
+    scripts:
+      - pwd
+      - ls -al
+      - mkdir -p app
       # Copy keystore if you are signing
       - mkdir -p app
       - cp $CM_KEYSTORE_PATH app/release.keystore
