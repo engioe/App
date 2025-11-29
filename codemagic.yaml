@@ -4,7 +4,11 @@ workflows:
     working_directory: Engioe
     environment:
       java: "17"
-    
+    - name: Upload Release APK
+  uses: actions/upload-artifact@v3
+  with:
+    name: MyApp-Release
+    path: app/build/outputs/apk/release/app-release.apk
     artifacts:
       - app/build/outputs/apk/release/*.apk
       - app/build/outputs/bundle/release/*.aab
