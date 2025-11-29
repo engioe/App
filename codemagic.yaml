@@ -1,57 +1,28 @@
-name: Android Release Build
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-
-jobs:
+workflows:
   android-release:
     name: Android Release Build
-    runs-on: macos-latest
+    max_build_duration: 120
     environment:
-      java: "17"
-    defaults:
-      run:
-        working-directory: Engioe
-
-    steps:
-      # Step 1: Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Step 2: Set up JDK
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-
-      # Step 3: Build APK / AAB
-      - name: Build Android Release
-        run: |
-          echo "📦 Building APK / AAB..."
-          ./gradlew assembleRelease
-          ./gradlew bundleRelease
-
-      # Step 4: Upload artifacts
-      - name: Upload Release APK/AAB
-        uses: actions/upload-artifact@v3
-        with:
-          name: MyApp-Release
-          path: |
-            app/build/outputs/apk/release/*.apk
-            app/build/outputs/bundle/release/*.aab
-
-      # Optional Step 5: Email Notification (requires setup)
-      - name: Notify via Email (Optional)
-        if: always()
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.example.com
-          server_port: 587
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "Android Release Build - ${{ github.workflow }} ${{ job.status }}"
-          body: "The Android Release build has completed. Status: ${{ job.status }}"
-          to: your-email@example.com
+      vars:
+        ANDROID_HOME: /Users/builder/Library/Android/sdk
+        JAVA_HOME: /Applications/Android\ Studio.app/Contents/jbr/Contents/Home
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      - name: Build APK
+        script: |
+          flutter build apk --release
+      - name: Build AAB
+        script: |
+          flutter build appbundle --release
+    artifacts:
+      - build/app/outputs/apk/release/*.apk
+      - build/app/outputs/bundle/release/*.aab
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
